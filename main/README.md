@@ -1,24 +1,24 @@
 # 🚀 Hibernate Image Persistence Utility
 
-Ek simple aur efficient Java Maven project jo Hibernate ORM ka use karke local directory se images ko database (LONGBLOB) mein save karta hai aur zaroorat padne par unhe wapas local system mein export karta hai.
+A simple and efficient Java Maven project that utilizes Hibernate ORM to persist local disk images directly into a database as binary data (`LONGBLOB`) and export them back to the local file system when needed.
 
 ---
 
 ## ✨ Features
 
-* 📁 **Bulk Image Upload:** Kisi bhi local folder se saari images ko ek sath read karke database mein store karta hai.
-* 💾 **Secure Byte Storage:** Images ko database mein secure `LONGBLOB` data type ke roop mein map karta hai.
-* 📤 **Automated Export:** Database se image data ko fetch karke wapas `.png` files ke roop mein local disk par write karta hai.
-* 🛡️ **Session Management:** Proper Hibernate session aur transaction boundaries ka use karta hai taaki data leak na ho.
+* 📁 **Bulk Image Upload:** Reads all images from any specified local folder simultaneously and stores them in the database.
+* 💾 **Secure Byte Storage:** Maps image binaries into the database using the secure `LONGBLOB` data type via Jakarta Persistence annotations.
+* 📤 **Automated Export:** Fetches byte data from the database and reconstructs it back into original `.png` image files on the local disk.
+* 🛡️ **Session Management:** Implements precise Hibernate session boundaries and atomic transactions to prevent any memory or resource leaks.
 
 ---
 
 ## 🛠️ Tech Stack & Prerequisites
 
-* **Language:** Java (JDK 17 ya higher)
+* **Language:** Java (JDK 17 or higher)
 * **Framework:** Hibernate ORM (Jakarta Persistence API)
 * **Build Tool:** Maven
-* **Database:** MySQL / MariaDB (ya koi bhi SQL DB jo BLOB support kare)
+* **Database:** MySQL / MariaDB (or any SQL relational database that supports binary large objects)
 
 ---
 
@@ -32,45 +32,8 @@ Ek simple aur efficient Java Maven project jo Hibernate ORM ka use karke local d
 │       │       └── 📁 example
 │       │           ├── 📄 BackendForImage.java  # Core Logic (Upload/Download)
 │       │           ├── 📄 HibernateUtil.java    # SessionFactory Configuration
-│       │           └── 📄 Image.java            # Entity Model (@Lob mapping)
-│       └── 📁 resources
-│           └── 📄 hibernate.cfg.xml            # Database Connection Setup
-├── 📄 pom.xml                                  # Dependencies Configuration
-└── 📄 README.md                                # Project Documentation
-```
-
----
-
-## 🚀 Setup & Configuration
-
-### 1. Database Configuration
-Sabse pehle `src/main/resources/hibernate.cfg.xml` file kholein aur apne local database ki details update karein:
-
-```xml
-<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/YOUR_DATABASE_NAME</property>
-<property name="hibernate.connection.username">YOUR_USERNAME</property>
-<property name="hibernate.connection.password">YOUR_PASSWORD</property>
-```
-
-> ⚠️ **Security Note:** GitHub par push karne se pehle apna asli database password config file se zaroor hata dein!
-
-### 2. How to Use
-
-Project mein do main functions hain jo `BackendForImage` class mein handles hote hain:
-
-* **Images DB mein bhejne ke liye:**
-  ```java
-  BackendForImage backend = new BackendForImage();
-  backend.transerFileLogic("C:\\Aapka\\Source\\Folder\\Path");
-  ```
-
-* **Images DB se wapas nikalne ke liye:**
-  ```java
-  backend.takeFileLogic("C:\\Aapka\\Destination\\Folder\\Path");
-  ```
-
----
-
-## 📝 License
-
-This project is open-source and free to use for educational purposes.
+│       │           ├── 📄 Image.java            # Entity Model (@Lob mapping)
+│       │   └── 📁 resources
+│       │       └── 📄 hibernate.cfg.xml            # Database Connection Setup
+├── 📄 pom.xml                                   # Dependencies Configuration
+└── 📄 README.md                                 # Project Documentation
